@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "solid-js": "^1.9.9"
+    "@hope-ui/solid": "^0.6.7",
+    "@stitches/core": "^1.2.8",
+    "solid-js": "^1.9.9",
+    "solid-transition-group": "^0.0.10"
   },
   "devDependencies": {
     "@types/node": "^24.6.0",

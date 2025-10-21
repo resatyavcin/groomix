@@ -1,18 +1,18 @@
 import { Router, Route } from "@solidjs/router";
 
 //pages
-import CreateRoom from "./pages/CreateRoom";
-
-//components
-import WelcomeMessage from "./components/WelcomeMessage";
+import CreateRoomPage from "./pages/CreateRoomPage";
+import RoomPage from "./pages/RoomPage";
+import LayoutForRoomPage from "./pages/LayoutForRoomPage";
 
 const App = () => {
   return (
-    <div style={{ width: "100vw", height: "100vh", padding: "20px" }}>
-      <WelcomeMessage />
-
+    <div class="w-screen">
       <Router>
-        <Route path="/create-room" component={CreateRoom} />
+        <Route path="/room" component={LayoutForRoomPage}>
+          <Route path=":id" component={RoomPage} />
+        </Route>
+        <Route path="/create-room" component={CreateRoomPage} />
       </Router>
     </div>
   );

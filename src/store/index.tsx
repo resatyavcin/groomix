@@ -9,7 +9,7 @@ type AppProviderProps = {
 export function AppProvider(props: AppProviderProps) {
   const [state, setState] = createStore<AppState>({
     user: null,
-    isLoading: true,
+    isLoading: false,
   });
 
   const store: [

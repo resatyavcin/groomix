@@ -1,26 +1,69 @@
-import { Button, FormControl, FormLabel, FormHelperText, Input, Flex, Center, Box } from '@hope-ui/solid';
+import { createSignal } from 'solid-js';
+import GenericFormComponent from '../components/GenericFormComponent';
+import { Center } from '@hope-ui/solid';
+import { useAppStore } from '../store';
+import type { Room, User } from '../store/appStore';
+import { useNavigate } from '@solidjs/router';
 
-const CreateRoom = () => {
+const CreateRoomPage = () => {
+  const [_, { setRoom, setUser }] = useAppStore();
+  const [userName, setUserName] = createSignal('');
+  const [roomName, setRoomName] = createSignal('');
+  const navigate = useNavigate();
+
+  const handleRouteToRoom = (id: string) => {
+    navigate(`/room/${id}`);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    const newUserId = crypto.randomUUID();
+    const newRoomId = crypto.randomUUID();
+    const newDate = new Date();
+    const newRoom: Room = { id: newRoomId, name: roomName(), createdAt: newDate };
+    const newUser: User = { id: newUserId, name: userName(), isAdmin: true, createdAt: newDate };
+
+    setRoom(newRoom);
+    setUser(newUser);
+
+    handleRouteToRoom(newRoomId);
+  };
+
+  const handleUserNameOnChange = (e: any) => {
+    setUserName(e.target.value);
+  };
+
+  const handleRoomNameOnChange = (e: any) => {
+    setRoomName(e.target.value);
+  };
+
   return (
-    <div style={{ height: '100vh' }}>
-      <Box w="400px" mx="auto" my="auto">
-        <Flex color="white" direction="column" gap="$4" mb="$4" mt="$4">
-          <Center w="400px">
-            <FormControl required>
-              <FormLabel for="email">Adınız</FormLabel>
-              <Input id="email" type="email" />
-              <FormHelperText>Takım arkadaşlarınız da isminizi görebilecekler.</FormHelperText>
-            </FormControl>
-          </Center>
-          <Center w="400px">
-            <Button colorScheme="accent" style={{ width: '100%' }}>
-              Oda Oluştur
-            </Button>
-          </Center>
-        </Flex>
-      </Box>
-    </div>
+    <Center class="h-screen flex justify-center items-center">
+      <GenericFormComponent
+        fields={[
+          {
+            id: 'user-name',
+            label: 'Kullanıcı Adı',
+            value: userName(),
+            onChange: handleUserNameOnChange,
+            type: 'text',
+            required: true,
+          },
+          {
+            id: 'room-name',
+            label: 'Oda Adı',
+            value: roomName(),
+            type: 'text',
+            helperText: 'Oda adınızı giriniz',
+            required: true,
+            onChange: handleRoomNameOnChange,
+          },
+        ]}
+        buttonText="Gönder"
+        onSubmit={handleSubmit}
+      />
+    </Center>
   );
 };
 
-export default CreateRoom;
+export default CreateRoomPage;

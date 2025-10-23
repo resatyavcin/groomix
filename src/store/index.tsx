@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store';
-import { AppContext, type AppState, type User } from './appStore';
+import { AppContext, type AppState, type User, type Room } from './appStore';
 import { useContext } from 'solid-js';
 
 type AppProviderProps = {
@@ -9,6 +9,7 @@ type AppProviderProps = {
 export function AppProvider(props: AppProviderProps) {
   const [state, setState] = createStore<AppState>({
     user: null,
+    room: null,
     isLoading: false,
   });
 
@@ -16,12 +17,14 @@ export function AppProvider(props: AppProviderProps) {
     AppState,
     {
       setUser: (user: User | null) => void;
+      setRoom: (room: Room | null) => void;
       setLoading: (val: boolean) => void;
     },
   ] = [
     state,
     {
       setUser: (user: User | null) => setState('user', user),
+      setRoom: (room: Room | null) => setState('room', room),
       setLoading: (val: boolean) => setState('isLoading', val),
     },
   ];

@@ -9,7 +9,6 @@ import { Text } from '@hope-ui/solid';
 
 const WelcomeMessage = () => {
   const [state] = useAppStore();
-  useAppStore();
 
   const { name, isAdmin } = state.user || { name: 'Misafir', isAdmin: false };
   return (

@@ -1,4 +1,4 @@
-import { HStack, Button } from "@hope-ui/solid";
+import { HStack, Button } from '@hope-ui/solid';
 
 const AdminAuthorizedButtons = () => {
   const handleShowVotes = () => {
@@ -13,12 +13,7 @@ const AdminAuthorizedButtons = () => {
       <Button colorScheme="primary" size="sm" onClick={handleShowVotes}>
         Göster
       </Button>
-      <Button
-        colorScheme="primary"
-        variant="subtle"
-        size="sm"
-        onClick={handleResetVotes}
-      >
+      <Button colorScheme="primary" variant="subtle" size="sm" onClick={handleResetVotes}>
         Sıfırla
       </Button>
     </HStack>

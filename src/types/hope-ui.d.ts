@@ -1,1 +1,1 @@
-declare module "@hope-ui/solid";
+declare module '@hope-ui/solid';

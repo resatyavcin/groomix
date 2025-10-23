@@ -1,4 +1,4 @@
-import { createContext } from "solid-js";
+import { createContext } from 'solid-js';
 
 interface User {
   readonly id: string;
@@ -19,7 +19,7 @@ const AppContext = createContext<
     {
       setUser: (user: User | null) => void;
       setLoading: (val: boolean) => void;
-    }
+    },
   ]
 >();
 

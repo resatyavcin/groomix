@@ -1,5 +1,5 @@
-import { io, Socket } from "socket.io-client";
-import { SOCKET_EVENTS, SocketEventPayloads } from "./socketEvents";
+import { io, Socket } from 'socket.io-client';
+import { SOCKET_EVENTS, SocketEventPayloads } from './socketEvents';
 
 let socket: Socket | null = null;
 
@@ -10,11 +10,8 @@ export function connectSocket(apiUrl: string) {
   return socket;
 }
 
-export function emitEvent<K extends keyof SocketEventPayloads>(
-  event: K,
-  payload: SocketEventPayloads[K]
-) {
-  if (!socket) throw new Error("Socket not connected");
+export function emitEvent<K extends keyof SocketEventPayloads>(event: K, payload: SocketEventPayloads[K]) {
+  if (!socket) throw new Error('Socket not connected');
   socket.emit(event, payload);
 }
 

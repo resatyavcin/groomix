@@ -1,8 +1,8 @@
 //components
-import TooltipForBadgeColorGrouping from "../components/TooltipForBadgeColorGrouping";
-import { Heading } from "@hope-ui/solid";
-import { Tag } from "@hope-ui/solid";
-import Card from "../components/ui/Card";
+import TooltipForBadgeColorGrouping from '../components/TooltipForBadgeColorGrouping';
+import { Heading } from '@hope-ui/solid';
+import { Tag } from '@hope-ui/solid';
+import Card from '../components/ui/Card';
 
 const Room = () => {
   return (

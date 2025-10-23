@@ -1,5 +1,5 @@
-import { createSignal } from "solid-js";
-import { Box, Center } from "@hope-ui/solid";
+import { createSignal } from 'solid-js';
+import { Box, Center } from '@hope-ui/solid';
 const Card = (props: { value: number }) => {
   const [isActive, setIsActive] = createSignal(false);
 

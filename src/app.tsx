@@ -1,9 +1,9 @@
-import { Router, Route } from "@solidjs/router";
+import { Router, Route } from '@solidjs/router';
 
 //pages
-import CreateRoomPage from "./pages/CreateRoomPage";
-import RoomPage from "./pages/RoomPage";
-import LayoutForRoomPage from "./pages/LayoutForRoomPage";
+import CreateRoomPage from './pages/CreateRoomPage';
+import RoomPage from './pages/RoomPage';
+import LayoutForRoomPage from './pages/LayoutForRoomPage';
 
 const App = () => {
   return (

@@ -1,17 +1,17 @@
-import { Match, Show, Switch } from "solid-js";
-import { useAppStore } from "../store";
+import { Match, Show, Switch } from 'solid-js';
+import { useAppStore } from '../store';
 
 //components
-import FallbackWelcomeMessage from "./FallbackWelcomeMessage";
+import FallbackWelcomeMessage from './FallbackWelcomeMessage';
 
 //hope-ui
-import { Text } from "@hope-ui/solid";
+import { Text } from '@hope-ui/solid';
 
 const WelcomeMessage = () => {
   const [state] = useAppStore();
   useAppStore();
 
-  const { name, isAdmin } = state.user || { name: "Misafir", isAdmin: false };
+  const { name, isAdmin } = state.user || { name: 'Misafir', isAdmin: false };
   return (
     <Show when={!state.isLoading} fallback={<FallbackWelcomeMessage />}>
       <Switch>

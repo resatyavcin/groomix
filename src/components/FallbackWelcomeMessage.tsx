@@ -1,4 +1,4 @@
-import { VStack, Skeleton } from "@hope-ui/solid";
+import { VStack, Skeleton } from '@hope-ui/solid';
 
 const FallbackWelcomeMessage = () => {
   return (

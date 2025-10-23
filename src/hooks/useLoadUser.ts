@@ -1,5 +1,5 @@
-import { onMount } from "solid-js";
-import { useAppStore } from "../store/index.tsx";
+import { onMount } from 'solid-js';
+import { useAppStore } from '../store/index.tsx';
 
 export function useLoadUser() {
   const [_, { setUser, setLoading }] = useAppStore();
@@ -9,7 +9,7 @@ export function useLoadUser() {
       // Yüklenme başlıyor
       setLoading(true);
 
-      const saved = localStorage.getItem("user");
+      const saved = localStorage.getItem('user');
       if (saved) {
         const user = JSON.parse(saved);
         setUser(user);

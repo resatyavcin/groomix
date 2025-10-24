@@ -1,9 +1,9 @@
 import { onCleanup, createEffect } from 'solid-js';
 import { connectSocket, emitEvent, onSocketEvent, offSocketEvent, disconnectSocket } from '../socketService';
 import { SOCKET_EVENTS } from '../socketEvents';
-import type { UserContext } from '../types/user';
+import type { User, Room } from '../store/appStore';
 
-interface SocketHandlers {
+export interface SocketHandlers {
   onUsers?: (data: any) => void;
   onScoreUpdate?: (data: any) => void;
   onShowAllScores?: (data: any) => void;
@@ -11,12 +11,14 @@ interface SocketHandlers {
 }
 
 type UseSocketParams = {
-  user: UserContext;
+  user: User;
+  room: Room;
   setHandlers: SocketHandlers;
 };
 
-export function useSocket({ user, setHandlers }: UseSocketParams) {
-  const { room, username, isAdmin, deviceId } = user;
+export function useSocket({ user, room, setHandlers }: UseSocketParams) {
+  const { name: username, isAdmin, deviceId } = user;
+  const { name: roomname } = room;
 
   createEffect(() => {
     if (!room || !username?.trim() || username === 'null' || username === 'undefined') return;
@@ -24,7 +26,7 @@ export function useSocket({ user, setHandlers }: UseSocketParams) {
     const socket = connectSocket(import.meta.env.VITE_API_URL);
 
     const handleConnect = () => {
-      emitEvent(SOCKET_EVENTS.JOIN_ROOM, { room, name: username, isAdmin, deviceId });
+      emitEvent(SOCKET_EVENTS.JOIN_ROOM, { room: roomname, name: username, isAdmin, deviceId });
     };
 
     socket.on('connect', handleConnect);

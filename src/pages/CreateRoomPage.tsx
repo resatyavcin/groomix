@@ -19,13 +19,13 @@ const CreateRoomPage = () => {
     e.preventDefault();
     const newUserId = crypto.randomUUID();
     const newRoomId = crypto.randomUUID();
+    const deviceId = crypto.randomUUID();
     const newDate = new Date();
     const newRoom: Room = { id: newRoomId, name: roomName(), createdAt: newDate };
-    const newUser: User = { id: newUserId, name: userName(), isAdmin: true, createdAt: newDate };
+    const newUser: User = { id: newUserId, name: userName(), isAdmin: true, deviceId, createdAt: newDate };
 
     setRoom(newRoom);
     setUser(newUser);
-
     handleRouteToRoom(newRoomId);
   };
 

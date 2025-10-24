@@ -5,8 +5,11 @@ import CreateRoomPage from './pages/CreateRoomPage';
 import RoomPage from './pages/RoomPage';
 import LayoutForRoomPage from './pages/LayoutForRoomPage';
 import LandingPage from './pages/LandingPage';
+import { usePersistence } from './hooks/usePersistence';
 
 const App = () => {
+  usePersistence();
+
   return (
     <Router>
       <Route path="/" component={LandingPage} />

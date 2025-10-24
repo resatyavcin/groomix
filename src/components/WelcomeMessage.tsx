@@ -10,18 +10,17 @@ import { Text } from '@hope-ui/solid';
 const WelcomeMessage = () => {
   const [state] = useAppStore();
 
-  const { name, isAdmin } = state.user || { name: 'Misafir', isAdmin: false };
   return (
     <Show when={!state.isLoading} fallback={<FallbackWelcomeMessage />}>
       <Switch>
-        <Match when={!isAdmin}>
+        <Match when={!state.user?.isAdmin}>
           <Text>
-            Hoş geldin, <strong>{name}</strong> (Misafir)
+            Hoş geldin, <strong>{state.user?.name}</strong> (Misafir)
           </Text>
         </Match>
-        <Match when={isAdmin}>
+        <Match when={state.user?.isAdmin}>
           <Text>
-            Hoş geldin, <strong>{name}</strong> (Admin)
+            Hoş geldin, <strong>{state.user?.name}</strong> (Admin)
           </Text>
         </Match>
       </Switch>

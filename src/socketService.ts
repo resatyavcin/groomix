@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { SOCKET_EVENTS, SocketEventPayloads } from './socketEvents';
+import { type SocketEventPayloads } from './socketEvents';
 
 let socket: Socket | null = null;
 
@@ -19,14 +19,14 @@ export function onSocketEvent<K extends keyof SocketEventPayloads>(
   event: K,
   handler: (payload: SocketEventPayloads[K]) => void
 ) {
-  socket?.on(event, handler);
+  socket?.on(event, handler as any);
 }
 
 export function offSocketEvent<K extends keyof SocketEventPayloads>(
   event: K,
   handler: (payload: SocketEventPayloads[K]) => void
 ) {
-  socket?.off(event, handler);
+  socket?.off(event, handler as any);
 }
 
 export function disconnectSocket() {

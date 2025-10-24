@@ -1,9 +1,12 @@
 import { createContext } from 'solid-js';
+import type { GroomingCardContentType } from '../../constants/GroomingCardContentList';
 
 interface User {
   readonly id: string;
   name: string;
   isAdmin: boolean;
+  selectedScore?: Pick<GroomingCardContentType, 'score' | 'scoreId'>;
+  deviceId: string;
   createdAt: Date;
 }
 

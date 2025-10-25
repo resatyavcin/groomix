@@ -3,21 +3,23 @@ import type { GroomingCardContentType } from '../../constants/GroomingCardConten
 
 interface User {
   readonly id: string;
+  selectedScore?: Pick<GroomingCardContentType, 'score' | 'scoreId'>;
   name: string;
   isAdmin: boolean;
-  selectedScore?: Pick<GroomingCardContentType, 'score' | 'scoreId'>;
   deviceId: string;
   createdAt: Date;
 }
 
 interface Room {
   readonly id: string;
-  name: string;
-  createdAt: Date;
+  name?: string;
+  createdAt?: Date;
 }
 
 interface AppState {
   user: User | null;
+  onlineUsers: User[];
+  selectedScore?: Pick<GroomingCardContentType, 'score' | 'scoreId'>;
   room: Room | null;
   isLoading: boolean;
 }
@@ -27,8 +29,11 @@ const AppContext = createContext<
     AppState,
     {
       setUser: (user: User | null) => void;
+      setOnlineUsers: (users: User[]) => void;
       setRoom: (room: Room | null) => void;
+      setSelectedScore: (selectedScore: Pick<GroomingCardContentType, 'score' | 'scoreId'>) => void;
       setLoading: (val: boolean) => void;
+      updateUserScore: (incomingUser: User) => void;
     },
   ]
 >();

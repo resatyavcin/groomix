@@ -15,12 +15,13 @@ export type SocketEventName = (typeof SOCKET_EVENTS)[SocketEventKey];
 
 export interface SocketEventPayloads {
   [SOCKET_EVENTS.JOIN_ROOM]: {
+    userId: string;
     room: string;
     name: string;
     isAdmin?: boolean;
     deviceId?: string;
   };
-  [SOCKET_EVENTS.SEND_SCORE]: Pick<GroomingCardContentType, 'scoreId' | 'score'>;
+  [SOCKET_EVENTS.SEND_SCORE]: Pick<GroomingCardContentType, 'scoreId' | 'score'> & { userId: string };
   [SOCKET_EVENTS.ROOM_USERS]: { users: User[] };
   [SOCKET_EVENTS.SCORE_UPDATE]: { userId: string; score: number };
   [SOCKET_EVENTS.SHOW_ALL_SCORES]: { scores: Record<string, number> };

@@ -15,7 +15,7 @@ const GroomingCard = (props: GroomingCardContentType) => {
         : { scoreId: props.scoreId, score: props.score };
 
     setUser({ ...state.user, selectedScore: next });
-    emitEvent(SOCKET_EVENTS.SEND_SCORE, next);
+    emitEvent(SOCKET_EVENTS.SEND_SCORE, { ...next, userId: state.user.id });
   };
 
   const isActive = () => state.user?.selectedScore?.scoreId === props.scoreId;

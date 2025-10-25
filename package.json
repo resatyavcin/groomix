@@ -12,6 +12,8 @@
     "@hope-ui/solid": "^0.6.7",
     "@solidjs/router": "^0.15.3",
     "@stitches/core": "^1.2.8",
+    "deepmerge": "^4.3.1",
+    "lucide-solid": "^0.547.0",
     "socket.io-client": "^4.8.1",
     "solid-js": "^1.9.9",
     "solid-transition-group": "^0.0.10"

@@ -17,8 +17,8 @@ type UseSocketParams = {
 };
 
 export function useSocket({ user, room, setHandlers }: UseSocketParams) {
-  const { name: username, isAdmin, deviceId } = user;
-  const { name: roomname } = room;
+  const { id, name: username, isAdmin, deviceId } = user;
+  const { id: roomId } = room;
 
   createEffect(() => {
     if (!room || !username?.trim() || username === 'null' || username === 'undefined') return;
@@ -26,7 +26,7 @@ export function useSocket({ user, room, setHandlers }: UseSocketParams) {
     const socket = connectSocket(import.meta.env.VITE_API_URL);
 
     const handleConnect = () => {
-      emitEvent(SOCKET_EVENTS.JOIN_ROOM, { room: roomname, name: username, isAdmin, deviceId });
+      emitEvent(SOCKET_EVENTS.JOIN_ROOM, { userId: id, room: roomId, name: username, isAdmin, deviceId });
     };
 
     socket.on('connect', handleConnect);

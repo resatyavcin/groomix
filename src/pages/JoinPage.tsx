@@ -1,47 +1,44 @@
-import { createSignal, onMount } from 'solid-js';
+import { createSignal } from 'solid-js';
 import GenericFormComponent from '../components/GenericFormComponent';
 import { Center } from '@hope-ui/solid';
-import { useAppStore } from '../store';
+import { useNavigate, useParams } from '@solidjs/router';
 import type { Room, User } from '../store/appStore';
-import { useNavigate } from '@solidjs/router';
+import { useAppStore } from '../store';
 
-const CreateRoomPage = () => {
+const JoinPage = () => {
   const [state, { setRoom, setUser }] = useAppStore();
   const [userName, setUserName] = createSignal('');
-  const [roomName, setRoomName] = createSignal('');
-  const navigate = useNavigate();
 
-  const handleRouteToRoom = (id: string) => {
-    navigate(`/room/${id}`);
+  const navigate = useNavigate();
+  const params = useParams();
+  const handleRouteToRoom = (id: string | undefined) => {
+    if (id) navigate(`/room/${id}`);
+    else navigate('create-room');
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const newUserId = crypto.randomUUID();
-    const newRoomId = crypto.randomUUID();
-    const newDeviceId = crypto.randomUUID();
+    if (!params.id) return;
     const newDate = new Date();
-    const newRoom: Room = { id: newRoomId, name: roomName(), createdAt: newDate };
+    const newUserId = crypto.randomUUID();
+    const newDeviceId = crypto.randomUUID();
+
+    const joinRoom: Room = { id: params.id };
     const newUser: User = {
-      ...state.user,
-      id: newUserId,
+      id: state.user?.id ?? newUserId,
       name: userName(),
-      isAdmin: true,
-      createdAt: newDate,
+      isAdmin: false,
       deviceId: state.user?.deviceId ?? newDeviceId,
+      createdAt: newDate,
     };
 
-    setRoom(newRoom);
+    setRoom(joinRoom);
     setUser(newUser);
-    handleRouteToRoom(newRoomId);
+    handleRouteToRoom(params.id);
   };
 
   const handleUserNameOnChange = (e: any) => {
     setUserName(e.target.value);
-  };
-
-  const handleRoomNameOnChange = (e: any) => {
-    setRoomName(e.target.value);
   };
 
   return (
@@ -56,15 +53,6 @@ const CreateRoomPage = () => {
             type: 'text',
             required: true,
           },
-          {
-            id: 'room-name',
-            label: 'Oda Adı',
-            value: roomName(),
-            type: 'text',
-            helperText: 'Oda adınızı giriniz',
-            required: true,
-            onChange: handleRoomNameOnChange,
-          },
         ]}
         buttonText="Gönder"
         onSubmit={handleSubmit}
@@ -73,4 +61,4 @@ const CreateRoomPage = () => {
   );
 };
 
-export default CreateRoomPage;
+export default JoinPage;

@@ -33,8 +33,12 @@ export function usePersistence() {
 
   createEffect(() => {
     const user = state.user;
-    if (user) localStorage.setItem('user', JSON.stringify(user));
-    else localStorage.removeItem('user');
+    if (user) {
+      const deviceId = user.deviceId ?? crypto.randomUUID();
+      localStorage.setItem('user', JSON.stringify({ ...user, deviceId }));
+    } else {
+      localStorage.removeItem('user');
+    }
   });
 
   createEffect(() => {

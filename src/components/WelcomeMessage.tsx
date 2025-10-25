@@ -1,5 +1,6 @@
 import { Match, Show, Switch } from 'solid-js';
 import { useAppStore } from '../store';
+import { Wifi, WifiOff } from 'lucide-solid';
 
 //components
 import FallbackWelcomeMessage from './FallbackWelcomeMessage';
@@ -12,6 +13,8 @@ const WelcomeMessage = () => {
 
   return (
     <Show when={!state.isLoading} fallback={<FallbackWelcomeMessage />}>
+      <Wifi color="#159e1e" />
+      <WifiOff color="#df0707" />
       <Switch>
         <Match when={!state.user?.isAdmin}>
           <Text>

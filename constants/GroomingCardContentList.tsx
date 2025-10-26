@@ -1,4 +1,5 @@
 import type { JSX } from 'solid-js';
+import { CoffeeIcon, CircleQuestionMark } from 'lucide-solid';
 
 export type GroomingCardContentType = {
   scoreId: number | null;
@@ -14,6 +15,6 @@ export const GroomingCardContentList: GroomingCardContentType[] = [
   { scoreId: 5, scoreComponent: '8', score: 8 },
   { scoreId: 6, scoreComponent: '13', score: 13 },
   { scoreId: 7, scoreComponent: '21', score: 21 },
-  { scoreId: 8, scoreComponent: <div>kahfe</div>, score: 0 },
-  { scoreId: 9, scoreComponent: <div>cay</div>, score: 0 },
+  { scoreId: 8, scoreComponent: <CoffeeIcon />, score: 0 },
+  { scoreId: 9, scoreComponent: <CircleQuestionMark />, score: 0 },
 ];

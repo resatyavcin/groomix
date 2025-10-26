@@ -1,5 +1,4 @@
 //components
-import TooltipForBadgeColorGrouping from '../components/TooltipForBadgeColorGrouping';
 import { Heading } from '@hope-ui/solid';
 import { useAppStore } from '../store';
 import { useSocket, type SocketHandlers } from '../hooks/useSocket';
@@ -43,7 +42,6 @@ const RoomPage = () => {
 
   return (
     <div class="flex flex-col items-center gap-y-6 ">
-      <TooltipForBadgeColorGrouping />
       <Heading size="4xl">Groomix Planlama</Heading>
       <OnlineUserList />
       <GroomingCardList />

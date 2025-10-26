@@ -3,12 +3,13 @@ import { Tag, Skeleton, TagLeftIcon } from '@hope-ui/solid';
 import { useAppStore } from '../store';
 import type { User } from '../store/appStore';
 import { WifiOff } from 'lucide-solid';
+import TooltipForBadgeColorGrouping from '../components/TooltipForBadgeColorGrouping';
 
 const OnlineUserList = () => {
   const [state] = useAppStore();
 
   return (
-    <div class="flex flex-wrap gap-4 justify-center mt-6">
+    <div class="flex items-center flex-wrap gap-4 justify-center mt-6">
       <Show when={state.onlineUsers} fallback={<Skeleton height="20px" />}>
         <For each={state.onlineUsers}>
           {(user: User) => (
@@ -41,6 +42,7 @@ const OnlineUserList = () => {
             </Switch>
           )}
         </For>
+        <TooltipForBadgeColorGrouping />
       </Show>
     </div>
   );

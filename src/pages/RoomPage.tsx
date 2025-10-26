@@ -10,7 +10,7 @@ import GroomingCardList from '../components/GroomingCardList';
 import OnlineUserList from '../components/OnlineUserList';
 
 const RoomPage = () => {
-  const [state, { setOnlineUsers, setSelectedScore, updateUserScore }] = useAppStore();
+  const [state, { setOnlineUsers, setUser, updateUserScore, setRoom }] = useAppStore();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -26,8 +26,16 @@ const RoomPage = () => {
       },
       onScoreUpdate: (data: { user: User }) => {
         if (!data.user) return;
+        console.log(data);
         updateUserScore(data.user);
-        setSelectedScore(data.user.selectedScore || { score: null, scoreId: null });
+      },
+      onIsReset: (data: boolean) => {
+        if (data && state.user) {
+          setUser({ ...state.user, selectedScore: { score: null, scoreId: null } });
+        }
+      },
+      onShowAllScores(data: boolean) {
+        if (state.room) setRoom({ ...state.room, isPublicVote: data });
       },
     };
     if (user && room) useSocket({ user, room, setHandlers });
@@ -36,7 +44,7 @@ const RoomPage = () => {
   return (
     <div class="flex flex-col items-center gap-y-6 ">
       <TooltipForBadgeColorGrouping />
-      <Heading size="4xl">TEXAS Groomix Planlama</Heading>
+      <Heading size="4xl">Groomix Planlama</Heading>
       <OnlineUserList />
       <GroomingCardList />
     </div>

@@ -21,7 +21,7 @@ const CreateRoomPage = () => {
     const newRoomId = crypto.randomUUID();
     const newDeviceId = crypto.randomUUID();
     const newDate = new Date();
-    const newRoom: Room = { id: newRoomId, name: roomName(), createdAt: newDate };
+    const newRoom: Room = { id: newRoomId, name: roomName(), createdAt: newDate, isPublicVote: false };
     const newUser: User = {
       ...state.user,
       id: newUserId,

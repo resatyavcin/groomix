@@ -14,6 +14,7 @@ interface User {
 interface Room {
   readonly id: string;
   name?: string;
+  isPublicVote?: boolean;
   createdAt?: Date;
 }
 

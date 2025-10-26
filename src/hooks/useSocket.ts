@@ -7,7 +7,7 @@ export interface SocketHandlers {
   onUsers?: (data: any) => void;
   onScoreUpdate?: (data: any) => void;
   onShowAllScores?: (data: any) => void;
-  isReset?: (data: any) => void;
+  onIsReset?: (data: boolean) => void;
 }
 
 type UseSocketParams = {
@@ -34,13 +34,13 @@ export function useSocket({ user, room, setHandlers }: UseSocketParams) {
     if (setHandlers.onUsers) onSocketEvent(SOCKET_EVENTS.ROOM_USERS, setHandlers.onUsers);
     if (setHandlers.onScoreUpdate) onSocketEvent(SOCKET_EVENTS.SCORE_UPDATE, setHandlers.onScoreUpdate);
     if (setHandlers.onShowAllScores) onSocketEvent(SOCKET_EVENTS.SHOW_ALL_SCORES, setHandlers.onShowAllScores);
-    if (setHandlers.isReset) onSocketEvent(SOCKET_EVENTS.IS_RESET, setHandlers.isReset);
+    if (setHandlers.onIsReset) onSocketEvent(SOCKET_EVENTS.IS_RESET, setHandlers.onIsReset);
 
     onCleanup(() => {
       if (setHandlers.onUsers) offSocketEvent(SOCKET_EVENTS.ROOM_USERS, setHandlers.onUsers);
       if (setHandlers.onScoreUpdate) offSocketEvent(SOCKET_EVENTS.SCORE_UPDATE, setHandlers.onScoreUpdate);
       if (setHandlers.onShowAllScores) offSocketEvent(SOCKET_EVENTS.SHOW_ALL_SCORES, setHandlers.onShowAllScores);
-      if (setHandlers.isReset) offSocketEvent(SOCKET_EVENTS.IS_RESET, setHandlers.isReset);
+      if (setHandlers.onIsReset) offSocketEvent(SOCKET_EVENTS.IS_RESET, setHandlers.onIsReset);
       disconnectSocket();
     });
   });

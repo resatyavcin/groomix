@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { type SocketEventPayloads } from './socketEvents';
+import { SOCKET_EVENTS, type SocketEventPayloads } from './socketEvents';
 
 let socket: Socket | null = null;
 
@@ -15,6 +15,10 @@ export function emitEvent<K extends keyof SocketEventPayloads>(event: K, payload
   socket.emit(event, payload);
 }
 
+export function emitEventWithoutPayload<K extends (typeof SOCKET_EVENTS)[keyof typeof SOCKET_EVENTS]>(event: K) {
+  if (!socket) throw new Error('Socket not connected');
+  socket.emit(event);
+}
 export function onSocketEvent<K extends keyof SocketEventPayloads>(
   event: K,
   handler: (payload: SocketEventPayloads[K]) => void

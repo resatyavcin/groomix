@@ -8,8 +8,6 @@ import FallbackWelcomeMessage from './FallbackWelcomeMessage';
 //hope-ui
 import { Text } from '@hope-ui/solid';
 
-const OfflineIcon = <WifiOff color="#df0707" />;
-const OnlineIcon = <Wifi color="#159e1e" />;
 const WelcomeMessage = () => {
   const [state] = useAppStore();
   const [isOnline, setIsOnline] = createSignal(navigator.onLine);
@@ -27,12 +25,9 @@ const WelcomeMessage = () => {
     });
   });
 
-  onMount(() => {
-    console.log(state.user);
-  });
   return (
     <Show when={!state.isLoading} fallback={<FallbackWelcomeMessage />}>
-      {isOnline() ? OnlineIcon : OfflineIcon}
+      {isOnline() ? <Wifi color="#159e1e" /> : <WifiOff color="#df0707" />}
       <Switch>
         <Match when={!state.user?.isAdmin}>
           <Text>

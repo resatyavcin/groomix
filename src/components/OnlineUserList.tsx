@@ -3,7 +3,6 @@ import { Tag, Skeleton, TagLeftIcon } from '@hope-ui/solid';
 import { useAppStore } from '../store';
 import type { User } from '../store/appStore';
 import { WifiOff } from 'lucide-solid';
-import TooltipForBadgeColorGrouping from '../components/TooltipForBadgeColorGrouping';
 
 const OnlineUserList = () => {
   const [state] = useAppStore();

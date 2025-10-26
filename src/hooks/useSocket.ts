@@ -37,7 +37,6 @@ export function useSocket({ user, room, setHandlers }: UseSocketParams) {
     if (setHandlers.isReset) onSocketEvent(SOCKET_EVENTS.IS_RESET, setHandlers.isReset);
 
     onCleanup(() => {
-      socket.off('connect', handleConnect);
       if (setHandlers.onUsers) offSocketEvent(SOCKET_EVENTS.ROOM_USERS, setHandlers.onUsers);
       if (setHandlers.onScoreUpdate) offSocketEvent(SOCKET_EVENTS.SCORE_UPDATE, setHandlers.onScoreUpdate);
       if (setHandlers.onShowAllScores) offSocketEvent(SOCKET_EVENTS.SHOW_ALL_SCORES, setHandlers.onShowAllScores);

@@ -30,7 +30,9 @@ export function AppProvider(props: AppProviderProps) {
     state,
     {
       setUser: (user: User | null) => setState('user', user),
-      setOnlineUsers: (users: User[]) => setState('onlineUsers', users),
+      setOnlineUsers: (users: User[]) => {
+        setState('onlineUsers', users);
+      },
       setSelectedScore: (selectedScore: Pick<GroomingCardContentType, 'score' | 'scoreId'>) =>
         setState('selectedScore', selectedScore),
       setRoom: (room: Room | null) => setState('room', room),

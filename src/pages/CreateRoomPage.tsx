@@ -1,4 +1,4 @@
-import { createSignal, onMount } from 'solid-js';
+import { createSignal } from 'solid-js';
 import GenericFormComponent from '../components/GenericFormComponent';
 import { Center } from '@hope-ui/solid';
 import { useAppStore } from '../store';

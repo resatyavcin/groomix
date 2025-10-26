@@ -8,6 +8,7 @@ interface User {
   isAdmin: boolean;
   deviceId: string;
   createdAt: Date;
+  isOnline?: boolean;
 }
 
 interface Room {

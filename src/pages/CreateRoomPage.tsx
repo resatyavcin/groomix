@@ -29,6 +29,7 @@ const CreateRoomPage = () => {
       isAdmin: true,
       createdAt: newDate,
       deviceId: state.user?.deviceId ?? newDeviceId,
+      selectedScore: { score: null, scoreId: null },
     };
 
     setRoom(newRoom);

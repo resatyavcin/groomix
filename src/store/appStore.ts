@@ -18,10 +18,16 @@ interface Room {
   createdAt?: Date;
 }
 
+interface CalculateScore {
+  winnerScore: number;
+  chart: [{ id: number; value: number; label: string; count: number }];
+}
+
 interface AppState {
   user: User | null;
   onlineUsers: User[];
   selectedScore?: Pick<GroomingCardContentType, 'score' | 'scoreId'>;
+  calculateScore: CalculateScore | null;
   room: Room | null;
   isLoading: boolean;
 }
@@ -31,6 +37,7 @@ const AppContext = createContext<
     AppState,
     {
       setUser: (user: User | null) => void;
+      setCalculateScore: (calculateScore: CalculateScore) => void;
       setOnlineUsers: (users: User[]) => void;
       setRoom: (room: Room | null) => void;
       setSelectedScore: (selectedScore: Pick<GroomingCardContentType, 'score' | 'scoreId'>) => void;
@@ -40,4 +47,4 @@ const AppContext = createContext<
   ]
 >();
 
-export { AppContext, type User, type Room, type AppState };
+export { AppContext, type User, type Room, type AppState, type CalculateScore };

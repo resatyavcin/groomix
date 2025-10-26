@@ -19,6 +19,7 @@ const JoinPage = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!params.id) return;
+
     const newDate = new Date();
     const newUserId = crypto.randomUUID();
     const newDeviceId = crypto.randomUUID();
@@ -32,8 +33,9 @@ const JoinPage = () => {
       createdAt: newDate,
     };
 
-    setRoom(joinRoom);
     setUser(newUser);
+
+    setRoom(joinRoom);
     handleRouteToRoom(params.id);
   };
 

@@ -42,7 +42,7 @@ const OnlineUserList = () => {
             </Switch>
           )}
         </For>
-        <TooltipForBadgeColorGrouping />
+        {/* <TooltipForBadgeColorGrouping /> */}
       </Show>
     </div>
   );

@@ -1,5 +1,5 @@
 import { createStore } from 'solid-js/store';
-import { AppContext, type AppState, type User, type Room } from './appStore';
+import { AppContext, type AppState, type User, type Room, type CalculateScore } from './appStore';
 import { useContext } from 'solid-js';
 import type { GroomingCardContentType } from '../../constants/GroomingCardContentList';
 
@@ -14,6 +14,7 @@ export function AppProvider(props: AppProviderProps) {
     onlineUsers: [],
     room: null,
     isLoading: false,
+    calculateScore: null,
   });
 
   const store: [
@@ -23,6 +24,7 @@ export function AppProvider(props: AppProviderProps) {
       setOnlineUsers: (users: User[]) => void;
       setSelectedScore: (selectedScore: Pick<GroomingCardContentType, 'score' | 'scoreId'>) => void;
       setRoom: (room: Room | null) => void;
+      setCalculateScore: (calculateScore: CalculateScore) => void;
       setLoading: (val: boolean) => void;
       updateUserScore: (incomingUser: User) => void;
     },
@@ -33,6 +35,7 @@ export function AppProvider(props: AppProviderProps) {
       setOnlineUsers: (users: User[]) => {
         setState('onlineUsers', users);
       },
+      setCalculateScore: (calculateScore: CalculateScore) => setState('calculateScore', calculateScore),
       setSelectedScore: (selectedScore: Pick<GroomingCardContentType, 'score' | 'scoreId'>) =>
         setState('selectedScore', selectedScore),
       setRoom: (room: Room | null) => setState('room', room),

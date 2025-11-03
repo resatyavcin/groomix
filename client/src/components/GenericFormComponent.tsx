@@ -19,29 +19,27 @@ type Props = {
 
 const GenericFormComponent = (props: Props) => {
   return (
-    <Box w="400px" mx="auto" my="auto">
-      <Flex color="white" direction="column" gap="$4" mb="$4" mt="$4">
-        <For each={props.fields}>
-          {(field) => (
-            <Center w="400px">
-              <FormControl required={field.required}>
-                <FormLabel for={field.id}>{field.label}</FormLabel>
-                <Input id={field.id} type={field.type || 'text'} value={field.value} onChange={field.onChange} />
-                <Show when={field.helperText}>
-                  <FormHelperText>{field.helperText}</FormHelperText>
-                </Show>
-              </FormControl>
-            </Center>
-          )}
-        </For>
+    <Flex color="white" direction="column" gap="$4" mb="$4" mt="$4">
+      <For each={props.fields}>
+        {(field) => (
+          <Center w="400px">
+            <FormControl required={field.required}>
+              <FormLabel for={field.id}>{field.label}</FormLabel>
+              <Input id={field.id} type={field.type || 'text'} value={field.value} onChange={field.onChange} />
+              <Show when={field.helperText}>
+                <FormHelperText>{field.helperText}</FormHelperText>
+              </Show>
+            </FormControl>
+          </Center>
+        )}
+      </For>
 
-        <Center w="400px">
-          <Button colorScheme="accent" style={{ width: '100%' }} onClick={props.onSubmit}>
-            {props.buttonText}
-          </Button>
-        </Center>
-      </Flex>
-    </Box>
+      <Center w="400px">
+        <Button colorScheme="accent" style={{ width: '100%' }} onClick={props.onSubmit}>
+          {props.buttonText}
+        </Button>
+      </Center>
+    </Flex>
   );
 };
 

@@ -14,7 +14,8 @@ interface User {
 interface Room {
   readonly id: string;
   name?: string;
-  isPublicVote?: boolean;
+  isPublicVote: boolean;
+  type: 'planning' | 'retrospective';
   createdAt?: Date;
 }
 

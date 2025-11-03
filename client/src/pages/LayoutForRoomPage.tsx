@@ -8,7 +8,6 @@ export default function LayoutForRoomPage(props: any) {
         <WelcomeMessage />
         <AdminAuthorizedButtons />
       </div>
-
       {props.children}
     </div>
   );

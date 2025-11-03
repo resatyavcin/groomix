@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 import GenericFormComponent from '../components/GenericFormComponent';
 import { Center } from '@hope-ui/solid';
-import { useNavigate, useParams } from '@solidjs/router';
+import { useLocation, useNavigate, useParams } from '@solidjs/router';
 import type { Room, User } from '../store/appStore';
 import { useAppStore } from '../store';
 
@@ -10,6 +10,7 @@ const JoinPage = () => {
   const [userName, setUserName] = createSignal('');
 
   const navigate = useNavigate();
+  const location = useLocation();
   const params = useParams();
   const handleRouteToRoom = (id: string | undefined) => {
     if (id) navigate(`/room/${id}`);
@@ -18,13 +19,15 @@ const JoinPage = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (!params.id) return;
+    const roomType = location.query.type as Room['type'];
+    if (!params.id && roomType) return;
 
     const newDate = new Date();
     const newUserId = crypto.randomUUID();
     const newDeviceId = crypto.randomUUID();
 
-    const joinRoom: Room = { id: params.id };
+    //TODO: 'isPublicVote' alanı güncel olarak ne ise o alınmalıdır. Şimdilik false geçildi.
+    const joinRoom: Room = { id: params.id, type: roomType, isPublicVote: false };
     const newUser: User = {
       id: state.user?.id ?? newUserId,
       name: userName(),

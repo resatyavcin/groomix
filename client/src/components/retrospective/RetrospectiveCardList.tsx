@@ -19,7 +19,7 @@ export default function RetrospectiveCardList(props: Props): JSX.Element {
           if (item.text) {
             return (
               <div class="p-3 border border-gray-100 rounded-md bg-blue-50 flex flex-col gap-2">
-                <p class="whitespace-pre-wrap break-words text-sm leading-snug">{item.text}</p>
+                <p class="whitespace-pre-wrap wrap-break-word text-sm leading-snug">{item.text}</p>
                 <div class="flex justify-center">
                   <img src={item.url} alt="GIF" class="max-h-40 rounded object-contain" loading="lazy" />
                 </div>

@@ -5,9 +5,8 @@ interface Props {
   title: string;
   keyName: 'good' | 'action' | 'improve';
   value: string;
-  onChange: (key: string, value: string) => void;
-  onSend: (key: string) => void;
-  onGifSelect?: (key: string, url: string) => void;
+  onChange: (key: 'good' | 'action' | 'improve', value: string) => void;
+  onSend: (key: 'good' | 'action' | 'improve', payload?: { text?: string; gif?: string }) => void;
 }
 
 export default function TextAreaBlockComponent(props: Props): JSX.Element {
@@ -17,7 +16,6 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
   const [showGifModal, setShowGifModal] = createSignal(false);
   const [selectedGif, setSelectedGif] = createSignal<string | null>(null);
 
-  // Giphy'den arama
   const searchGifs = async () => {
     if (!query()) return;
     const res = await fetch(
@@ -27,26 +25,17 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
     setResults(data.data);
   };
 
-  // Popup'tan GIF seçilince sadece önizleme olarak ekle
   const handleGifSelect = (url: string) => {
     setSelectedGif(url);
     setShowGifModal(false);
   };
 
-  // Gönder butonuna basılınca hem metin hem GIF gider
   const handleSendClick = () => {
-    const text = props.value;
-    const gif = selectedGif();
+    const text = props.value.trim();
+    const gif = selectedGif() || undefined;
+    if (!text && !gif) return;
 
-    // Boşsa gönderme
-    if (!text.trim() && !gif) return;
-
-    // Birleştir (Enter'lar korunur)
-    const combinedMessage = gif ? `${text}${text ? '\n' : ''}${gif}` : text;
-
-    props.onChange(props.keyName, combinedMessage);
-    props.onSend(props.keyName);
-
+    props.onSend(props.keyName, { text, gif });
     setSelectedGif(null);
   };
 
@@ -55,9 +44,7 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
       <h2 class="font-bold text-xl mb-2">{props.title}</h2>
 
       <div class="relative">
-        {/* textarea kutusu */}
         <div class="w-full bg-gray-50 border rounded p-2 flex flex-col gap-2">
-          {/* GIF önizleme */}
           <Show when={selectedGif()}>
             <div class="w-full flex justify-center">
               <div class="relative">
@@ -72,16 +59,14 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
             </div>
           </Show>
 
-          {/* Metin alanı */}
           <textarea
             class="w-full bg-transparent resize-none overflow-y-auto text-sm focus:outline-none h-32"
             placeholder="Yaz..."
             value={props.value}
-            onInput={(e) => props.onChange(props.keyName, (e.target as HTMLTextAreaElement).value)}
+            onInput={(e) => props.onChange(props.keyName, e.currentTarget.value)}
           />
         </div>
 
-        {/* GIF seçme butonu */}
         <button
           class="absolute bottom-2 right-12 bg-blue-500 hover:bg-blue-600 text-white w-8 h-8 rounded-full shadow transition flex items-center justify-center"
           onClick={() => setShowGifModal(true)}
@@ -90,7 +75,6 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
           <ImagePlay size={16} color="#ffffff" />
         </button>
 
-        {/* Gönder butonu */}
         <button
           class="absolute bottom-2 right-2 bg-blue-500 hover:bg-blue-600 text-white w-8 h-8 rounded-full shadow transition flex items-center justify-center"
           onClick={handleSendClick}
@@ -99,7 +83,6 @@ export default function TextAreaBlockComponent(props: Props): JSX.Element {
         </button>
       </div>
 
-      {/* Giphy popup */}
       <Show when={showGifModal()}>
         <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div class="bg-white rounded-lg p-4 w-96 relative">

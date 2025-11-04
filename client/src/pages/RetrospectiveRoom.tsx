@@ -1,89 +1,91 @@
-import { createSignal, For } from 'solid-js';
+import { batch, createSignal, Index } from 'solid-js';
 import TextareaBlockComponent from '@/components/TextAreaBlockComponent';
-import RetrospectiveCardList from '@/components/RetrospectiveCardListComponent';
+import RetrospectiveCardList from '@/components/retrospective/RetrospectiveCardList';
 
-const RetrospectiveRoom = () => {
-  const [goodThings, setGoodThings] = createSignal<(string | { type: 'gif'; url: string })[]>([]);
-  const [actions, setActions] = createSignal<(string | { type: 'gif'; url: string })[]>([]);
-  const [improvements, setImprovements] = createSignal<(string | { type: 'gif'; url: string })[]>([]);
+export type RetrospectiveItem =
+  | string
+  | {
+      type: 'gif';
+      url: string;
+      text?: string;
+    };
 
-  const [inputValues, setInputValues] = createSignal({
-    good: '',
-    action: '',
-    improve: '',
+export type ColumnKey = 'good' | 'improve' | 'action';
+
+interface Column {
+  title: string;
+  keyName: ColumnKey;
+}
+
+// Kolonları const olarak dışarıya taşı
+const COLUMNS: readonly Column[] = [
+  { title: 'Neleri İyi Yaptık', keyName: 'good' },
+  { title: 'Neleri Geliştirebiliriz', keyName: 'improve' },
+  { title: 'Aksiyonlar', keyName: 'action' },
+] as const;
+
+export default function RetrospectiveRoom() {
+  const [items, setItems] = createSignal<Record<ColumnKey, RetrospectiveItem[]>>({
+    good: [],
+    improve: [],
+    action: [],
   });
 
-  const handleChange = (key: string, value: string) => {
-    setInputValues({ ...inputValues(), [key]: value });
+  const [inputValues, setInputValues] = createSignal<Record<ColumnKey, string>>({
+    good: '',
+    improve: '',
+    action: '',
+  });
+
+  const handleChange = (key: ColumnKey, value: string) => {
+    setInputValues((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSend = (key: string) => {
-    console.log('handleSend tetiklendi');
-    const val = inputValues()[key as keyof ReturnType<typeof inputValues>].trim();
-    if (!val) return;
+  const createItem = (text?: string, gif?: string): RetrospectiveItem | null => {
+    if (!text && !gif) return null;
 
-    if (key === 'good') setGoodThings([...goodThings(), val]);
-    if (key === 'action') setActions([...actions(), val]);
-    if (key === 'improve') setImprovements([...improvements(), val]);
-
-    setInputValues({ ...inputValues(), [key]: '' });
+    if (gif && text) return { type: 'gif', url: gif, text };
+    if (gif) return { type: 'gif', url: gif };
+    if (text) return text;
+    return null;
   };
 
-  const handleGifSelect = (key: string, gifUrl: string) => {
-    const gifItem = { type: 'gif' as const, url: gifUrl };
+  const handleSend = (key: ColumnKey, payload?: { text?: string; gif?: string }) => {
+    const item = createItem(payload?.text?.trim(), payload?.gif);
+    if (!item) return;
 
-    if (key === 'good') setGoodThings([...goodThings(), gifItem]);
-    if (key === 'action') setActions([...actions(), gifItem]);
-    if (key === 'improve') setImprovements([...improvements(), gifItem]);
+    batch(() => {
+      setItems((prev) => ({
+        ...prev,
+        [key]: [...prev[key], item],
+      }));
+      setInputValues((prev) => ({ ...prev, [key]: '' }));
+    });
   };
-
-  type RetrospectiveColumnType = {
-    title: string;
-    keyName: 'good' | 'action' | 'improve';
-    value: string;
-    items: (string | { type: 'gif'; url: string })[];
-  };
-
-  const RetrospectiveColumn: RetrospectiveColumnType[] = [
-    {
-      title: 'Neleri İyi Yaptık',
-      keyName: 'good',
-      value: inputValues().good,
-      items: goodThings(),
-    },
-    {
-      title: 'Neleri Geliştirebiliriz',
-      keyName: 'improve',
-      value: inputValues().improve,
-      items: improvements(),
-    },
-    {
-      title: 'Aksiyonlar',
-      keyName: 'action',
-      value: inputValues().action,
-      items: actions(),
-    },
-  ];
 
   return (
-    <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-6 bg-white">
-      <For each={RetrospectiveColumn}>
-        {(col: RetrospectiveColumnType) => (
-          <div>
-            <TextareaBlockComponent
-              title={col.title}
-              keyName={col.keyName}
-              value={col.value}
-              onChange={handleChange}
-              onSend={handleSend}
-              onGifSelect={handleGifSelect}
-            />
-            <RetrospectiveCardList items={col.items} />
-          </div>
-        )}
-      </For>
+    <div class="min-h-screen p-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Index each={COLUMNS}>
+            {(column) => {
+              const key = column().keyName;
+              return (
+                <div class="flex flex-col h-full">
+                  <TextareaBlockComponent
+                    title={column().title}
+                    keyName={key}
+                    value={inputValues()[key]}
+                    onChange={handleChange}
+                    onSend={handleSend}
+                  />
+                  <RetrospectiveCardList items={items()[key]} />
+                </div>
+              );
+            }}
+          </Index>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default RetrospectiveRoom;
+}

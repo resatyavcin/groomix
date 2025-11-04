@@ -1,14 +1,7 @@
 import { JSX, For } from 'solid-js';
 import RetrospectiveTextCard from '@/components/retrospective/RetrospectiveTextCard';
 import RetrospectiveGifCard from '@/components/retrospective/RetrospectiveGifCard';
-
-type RetrospectiveItem =
-  | string
-  | {
-      type: 'gif';
-      url: string;
-      text?: string;
-    };
+import { RetrospectiveItem } from '@/types';
 
 interface Props {
   items: RetrospectiveItem[];

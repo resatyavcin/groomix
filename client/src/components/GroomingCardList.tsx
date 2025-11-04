@@ -1,12 +1,13 @@
+import { For } from 'solid-js';
 import { GroomingCardContentList } from '@/constants/GroomingCardContentList';
 import GroomingCard from '@/components/GroomingCard';
 
 const GroomingCardList = () => {
   return (
     <div class="flex justify-center flex-wrap gap-4">
-      {GroomingCardContentList.map((content, _) => (
-        <GroomingCard scoreId={content.scoreId} score={content.score} scoreComponent={content.scoreComponent} />
-      ))}
+      <For each={GroomingCardContentList}>
+        {(content) => <GroomingCard {...content} />}
+      </For>
     </div>
   );
 };

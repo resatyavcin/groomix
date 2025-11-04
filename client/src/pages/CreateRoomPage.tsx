@@ -4,16 +4,17 @@ import { Center, RadioGroup, Radio } from '@hope-ui/solid';
 import { useAppStore } from '../store';
 import type { Room, User } from '../store/appStore';
 import { useNavigate } from '@solidjs/router';
+import { ROOM_TYPE } from '../../constants/RoomType';
 
 const CreateRoomPage = () => {
   const [state, { setRoom, setUser }] = useAppStore();
   const [userName, setUserName] = createSignal('');
   const [roomName, setRoomName] = createSignal('');
-  const [appType, setAppType] = createSignal<{ type: 'planning' | 'retrospective' }>({ type: 'planning' });
+  const [roomType, setRoomType] = createSignal<'planning' | 'retrospective'>('planning');
   const navigate = useNavigate();
 
   const handleRouteToRoom = (id: string) => {
-    navigate(`/room/${id}?type=${appType().type}`);
+    navigate(`/room/${id}?type=${roomType()}`);
   };
 
   const handleSubmit = (e: any) => {
@@ -27,7 +28,7 @@ const CreateRoomPage = () => {
       name: roomName(),
       createdAt: newDate,
       isPublicVote: false,
-      type: appType().type,
+      type: roomType(),
     };
     const newUser: User = {
       ...state.user,
@@ -54,7 +55,7 @@ const CreateRoomPage = () => {
 
   const handleRadioButton = (e: any) => {
     const value: 'planning' | 'retrospective' = e.target.value;
-    setAppType({ type: value });
+    setRoomType(value);
   };
 
   //TODO:RadioGroup DefaultCheck Sync değil state ile
@@ -64,14 +65,14 @@ const CreateRoomPage = () => {
         <Radio
           onChange={handleRadioButton}
           value="planning"
-          class={`border! ${appType().type === 'planning' ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'} flex-1 h-full p-4 rounded-md text-lg!`}
+          class={`border! ${roomType() === ROOM_TYPE.PLANNING ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'} flex-1 h-full p-4 rounded-md text-lg!`}
         >
           Planning
         </Radio>
         <Radio
           onChange={handleRadioButton}
           value="retrospective"
-          class={`border! ${appType().type === 'retrospective' ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'} flex-1 h-full p-4 rounded-md text-lg!`}
+          class={`border! ${roomType() === ROOM_TYPE.RETROSPECTIVE ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'} flex-1 h-full p-4 rounded-md text-lg!`}
         >
           Retrospective
         </Radio>

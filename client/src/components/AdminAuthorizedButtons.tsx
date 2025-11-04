@@ -1,8 +1,8 @@
 import { HStack, Button } from '@hope-ui/solid';
 import { Show } from 'solid-js';
-import { useAppStore } from '../store';
-import { emitEvent, emitEventWithoutPayload } from '../socketService';
-import { SOCKET_EVENTS } from '../socketEvents';
+import { useAppStore } from '@/store';
+import { emitEvent, emitEventWithoutPayload } from '@/socketService';
+import { SOCKET_EVENTS } from '@/socketEvents';
 
 const AdminAuthorizedButtons = () => {
   const [state, { setSelectedScore }] = useAppStore();

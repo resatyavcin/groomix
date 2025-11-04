@@ -1,10 +1,10 @@
 import { createSignal } from 'solid-js';
-import GenericFormComponent from '../components/GenericFormComponent';
+import GenericFormComponent from '@/components/ReusableInputFormComponent';
 import { Center, RadioGroup, Radio } from '@hope-ui/solid';
-import { useAppStore } from '../store';
-import type { Room, User } from '../store/appStore';
+import { useAppStore } from '@/store';
+import type { Room, User } from '@/store/appStore';
 import { useNavigate } from '@solidjs/router';
-import { ROOM_TYPE } from '../../constants/RoomType';
+import { ROOM_TYPE } from '@/constants/RoomType';
 
 const CreateRoomPage = () => {
   const [state, { setRoom, setUser }] = useAppStore();

@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js';
-import GenericFormComponent from '../components/GenericFormComponent';
+import GenericFormComponent from '../components/ReusableInputFormComponent';
 import { Center } from '@hope-ui/solid';
 import { useLocation, useNavigate, useParams } from '@solidjs/router';
 import type { Room, User } from '../store/appStore';

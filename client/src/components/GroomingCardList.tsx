@@ -1,5 +1,5 @@
-import { GroomingCardContentList } from '../../constants/GroomingCardContentList';
-import GroomingCard from './GroomingCard';
+import { GroomingCardContentList } from '@/constants/GroomingCardContentList';
+import GroomingCard from '@/components/GroomingCard';
 
 const GroomingCardList = () => {
   return (

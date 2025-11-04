@@ -1,5 +1,5 @@
-import AdminAuthorizedButtons from '../components/AdminAuthorizedButtons';
-import WelcomeMessage from '../components/WelcomeMessage';
+import AdminAuthorizedButtons from '@/components/AdminAuthorizedButtons';
+import WelcomeMessage from '@/components/WelcomeMessage';
 
 export default function LayoutForRoomPage(props: any) {
   //TODO: Burada roomtype a göre değişecek aksiyonlar olacak.

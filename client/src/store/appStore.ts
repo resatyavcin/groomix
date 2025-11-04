@@ -1,5 +1,5 @@
 import { createContext } from 'solid-js';
-import type { GroomingCardContentType } from '../../constants/GroomingCardContentList';
+import type { GroomingCardContentType } from '@/constants/GroomingCardContentList';
 
 interface User {
   readonly id: string;

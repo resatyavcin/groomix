@@ -1,7 +1,7 @@
 import { onCleanup, createEffect } from 'solid-js';
-import { connectSocket, emitEvent, onSocketEvent, offSocketEvent, disconnectSocket } from '../socketService';
-import { SOCKET_EVENTS } from '../socketEvents';
-import type { User, Room } from '../store/appStore';
+import { connectSocket, emitEvent, onSocketEvent, offSocketEvent, disconnectSocket } from '@/socketService';
+import { SOCKET_EVENTS } from '@/socketEvents';
+import type { User, Room } from '@/store/appStore';
 
 export interface SocketHandlers {
   onUsers?: (data: any) => void;

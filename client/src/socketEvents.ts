@@ -1,4 +1,4 @@
-import type { GroomingCardContentType } from '../constants/GroomingCardContentList';
+import type { GroomingCardContentType } from './constants/GroomingCardContentList';
 import type { User } from './store/appStore';
 
 export const SOCKET_EVENTS = {

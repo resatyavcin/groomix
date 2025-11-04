@@ -1,7 +1,7 @@
 import { createStore } from 'solid-js/store';
-import { AppContext, type AppState, type User, type Room, type CalculateScore } from './appStore';
+import { AppContext, type AppState, type User, type Room, type CalculateScore } from '@/store/appStore';
 import { useContext } from 'solid-js';
-import type { GroomingCardContentType } from '../../constants/GroomingCardContentList';
+import type { GroomingCardContentType } from '@/constants/GroomingCardContentList';
 
 type AppProviderProps = {
   children: any;

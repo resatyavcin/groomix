@@ -4,7 +4,7 @@ import { useNavigate, useParams } from '@solidjs/router';
 //components
 import GroomingCardList from '../components/GroomingCardList';
 import OnlineUserList from '../components/OnlineUserList';
-import ResultChart from '../components/ResultChart';
+import ResultChart from '../components/ResultChartComponent';
 
 import { Crown } from 'lucide-solid';
 import { Heading } from '@hope-ui/solid';

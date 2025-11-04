@@ -1,7 +1,7 @@
-import type { GroomingCardContentType } from '../../constants/GroomingCardContentList';
-import { SOCKET_EVENTS } from '../socketEvents';
-import { emitEvent } from '../socketService';
-import { useAppStore } from '../store';
+import type { GroomingCardContentType } from '@/constants/GroomingCardContentList';
+import { SOCKET_EVENTS } from '@/socketEvents';
+import { emitEvent } from '@/socketService';
+import { useAppStore } from '@/store';
 
 const GroomingCard = (props: GroomingCardContentType) => {
   const [state, { setUser }] = useAppStore();
@@ -26,7 +26,7 @@ const GroomingCard = (props: GroomingCardContentType) => {
       class={`flex items-center justify-center rounded-sm basis-20 h-28 font-bold hover:cursor-pointer 
         ${isActive() ? 'bg-gray-800 text-gray-50' : 'bg-gray-50 text-gray-800'} border! border-gray-200`}
     >
-      {props.scoreComponent}
+      {props.scoreComponent()}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, FormHelperText, Input, Flex, Center, Box } from '@hope-ui/solid';
+import { Button, FormControl, FormLabel, FormHelperText, Input, Flex, Center } from '@hope-ui/solid';
 import { Show, For } from 'solid-js';
 
 type FormField = {
@@ -17,7 +17,7 @@ type Props = {
   onSubmit?: (e: any) => void;
 };
 
-const GenericFormComponent = (props: Props) => {
+const ReusableInputFormComponent = (props: Props) => {
   return (
     <Flex color="white" direction="column" gap="$4" mb="$4" mt="$4">
       <For each={props.fields}>
@@ -43,4 +43,4 @@ const GenericFormComponent = (props: Props) => {
   );
 };
 
-export default GenericFormComponent;
+export default ReusableInputFormComponent;

@@ -1,5 +1,5 @@
 import { onMount, createEffect } from 'solid-js';
-import { useAppStore } from '../store';
+import { useAppStore } from '@/store';
 
 export function usePersistence() {
   const [state, { setUser, setRoom, setLoading }] = useAppStore();

@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from '@solidjs/router';
-import type { Room } from '../store/appStore';
+import type { Room } from '@/store/appStore';
 import { onMount, Show } from 'solid-js';
-import { ROOM_TYPE } from '../../constants/RoomType';
+import { ROOM_TYPE } from '@/constants/RoomType';
 
 //pages
 import PlanningRoom from './PlanningRoom';

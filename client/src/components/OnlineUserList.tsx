@@ -1,7 +1,7 @@
 import { For, Match, Show, Switch } from 'solid-js';
 import { Tag, Skeleton, TagLeftIcon } from '@hope-ui/solid';
-import { useAppStore } from '../store';
-import type { User } from '../store/appStore';
+import { useAppStore } from '@/store';
+import type { User } from '@/store/appStore';
 import { WifiOff } from 'lucide-solid';
 
 const OnlineUserList = () => {

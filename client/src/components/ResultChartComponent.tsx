@@ -6,7 +6,7 @@ import { Doughnut } from 'solid-chartjs';
 import { Show } from 'solid-js';
 
 Chart.register(ChartDataLabels);
-const ResultChart = () => {
+const ResultChartComponent = () => {
   const [state] = useAppStore();
 
   const data = createMemo(() => {
@@ -102,4 +102,4 @@ const ResultChart = () => {
   );
 };
 
-export default ResultChart;
+export default ResultChartComponent;

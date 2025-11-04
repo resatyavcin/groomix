@@ -1,49 +1,76 @@
-import { onMount, Show } from 'solid-js';
+import { onMount, Show, type Component } from 'solid-js';
 import { useNavigate, useParams } from '@solidjs/router';
-
-//components
-import GroomingCardList from '../components/GroomingCardList';
-import OnlineUserList from '../components/OnlineUserList';
-import ResultChart from '../components/ResultChartComponent';
-
 import { Crown } from 'lucide-solid';
 import { Heading } from '@hope-ui/solid';
-import { useAppStore } from '../store';
-import type { CalculateScore, User } from '../store/appStore';
-import { useSocket, type SocketHandlers } from '../hooks/useSocket';
+
+import GroomingCardList from '@/components/GroomingCardList';
+import OnlineUserList from '@/components/OnlineUserList';
+import ResultChart from '@/components/ResultChartComponent';
+import { useAppStore } from '@/store';
+import type { CalculateScore, User } from '@/store/appStore';
+import { useSocket, type SocketHandlers } from '@/hooks/useSocket';
+
+const DEFAULT_SCORE = { score: null, scoreId: null };
+
+interface WinnerScoreProps {
+  score: string | number;
+}
+
+const WinnerScore: Component<WinnerScoreProps> = ({ score }) => (
+  <Heading size="4xl" class="text-center flex font-bold">
+    <Crown color="#c97908" /> {score}
+  </Heading>
+);
 
 const PlanningRoom = () => {
-  const [state, { setOnlineUsers, setUser, updateUserScore, setRoom, setCalculateScore }] = useAppStore();
+  const [state, actions] = useAppStore();
   const navigate = useNavigate();
   const params = useParams();
 
-  onMount(() => {
-    const user = state.user;
-    const room = state.room;
-    if (!user || params.id !== state.room?.id) {
-      navigate(`/join/${params.id}`);
-    }
-    if (state.room) setRoom({ ...state.room, isPublicVote: false });
+  const initializeRoom = () => {
+    const { user, room } = state;
 
-    const setHandlers: SocketHandlers = {
-      onUsers: (users: User[]) => {
-        setOnlineUsers(users);
-      },
-      onScoreUpdate: (data: { user: User; calculateScore: CalculateScore }) => {
-        if (!data.user) return;
-        setCalculateScore(data?.calculateScore);
-        updateUserScore(data.user);
-      },
-      onIsReset: (data: boolean) => {
-        if (data && state.user) {
-          setUser({ ...state.user, selectedScore: { score: null, scoreId: null } });
-        }
-      },
-      onShowAllScores(data: boolean) {
-        if (state.room) setRoom({ ...state.room, isPublicVote: data });
-      },
-    };
-    if (user && room) useSocket({ user, room, setHandlers });
+    if (!user || params.id !== room?.id) {
+      navigate(`/join/${params.id}`);
+      return false;
+    }
+
+    if (room) {
+      actions.setRoom({ ...room, isPublicVote: false });
+    }
+
+    return true;
+  };
+
+  const createSocketHandlers = (): SocketHandlers => ({
+    onUsers: (users: User[]) => actions.setOnlineUsers(users),
+
+    onScoreUpdate: (data: { user: User; calculateScore: CalculateScore }) => {
+      if (!data.user) return;
+      actions.setCalculateScore(data.calculateScore);
+      actions.updateUserScore(data.user);
+    },
+
+    onIsReset: (shouldReset: boolean) => {
+      if (shouldReset && state.user) {
+        actions.setUser({ ...state.user, selectedScore: DEFAULT_SCORE });
+      }
+    },
+
+    onShowAllScores: (isPublic: boolean) => {
+      if (state.room) {
+        actions.setRoom({ ...state.room, isPublicVote: isPublic });
+      }
+    },
+  });
+
+  onMount(() => {
+    const isInitialized = initializeRoom();
+    const { user, room } = state;
+
+    if (isInitialized && user && room) {
+      useSocket({ user, room, setHandlers: createSocketHandlers() });
+    }
   });
 
   return (
@@ -51,17 +78,18 @@ const PlanningRoom = () => {
       <Heading size="4xl" class="text-center">
         Groomix Planlama
       </Heading>
+
       <OnlineUserList />
+
       <div class="flex gap-8 flex-wrap">
         <div class="flex-2">
           <GroomingCardList />
         </div>
+
         <Show when={state.room?.isPublicVote}>
           <div class="flex flex-col justify-center flex-1 min-w-[400px]">
             <Show when={state.calculateScore?.winnerScore}>
-              <Heading size="4xl" class="text-center flex font-bold">
-                <Crown color="#c97908" /> {state.calculateScore?.winnerScore}
-              </Heading>
+              {(score) => <WinnerScore score={score()} />}
             </Show>
             <ResultChart />
           </div>

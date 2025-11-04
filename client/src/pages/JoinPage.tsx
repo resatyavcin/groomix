@@ -12,16 +12,12 @@ const JoinPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  const handleRouteToRoom = (id: string | undefined) => {
-    if (id) navigate(`/room/${id}`);
-    else navigate('create-room');
-  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const roomType = location.query.type as Room['type'];
-    if (!params.id && roomType) return;
+    if (!params.id) return;
 
+    const roomType = (location.query.type as Room['type']) || 'planning';
     const newDate = new Date();
     const newUserId = crypto.randomUUID();
     const newDeviceId = crypto.randomUUID();
@@ -34,12 +30,12 @@ const JoinPage = () => {
       isAdmin: false,
       deviceId: state.user?.deviceId ?? newDeviceId,
       createdAt: newDate,
+      selectedScore: { score: null, scoreId: null },
     };
 
     setUser(newUser);
-
     setRoom(joinRoom);
-    handleRouteToRoom(params.id);
+    navigate(`/room/${params.id}?type=${roomType}`);
   };
 
   const handleUserNameOnChange = (e: any) => {

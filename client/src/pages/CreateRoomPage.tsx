@@ -1,6 +1,7 @@
-import { createSignal, createMemo, type Component } from 'solid-js';
+import { createSignal, createMemo } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
-import { Center, RadioGroup, Radio } from '@hope-ui/solid';
+import { Center } from '@hope-ui/solid';
+import { Github as GithubIcon } from 'lucide-solid';
 
 import GenericFormComponent from '@/components/ReusableInputFormComponent';
 import { useAppStore } from '@/store';
@@ -10,28 +11,6 @@ import { ROOM_TYPE } from '@/constants/RoomType';
 type RoomType = 'planning' | 'retrospective';
 
 const DEFAULT_SCORE = { score: null, scoreId: null };
-
-interface RoomTypeRadioProps {
-  value: RoomType;
-  label: string;
-  isActive: boolean;
-  onChange: (e: InputEvent) => void;
-}
-
-const RoomTypeRadio: Component<RoomTypeRadioProps> = ({ value, label, isActive, onChange }) => {
-  const radioStyles = createMemo(() => {
-    const baseStyles = 'border! flex-1 h-full p-4 rounded-md text-lg!';
-    const activeStyles = 'bg-blue-50 border-blue-400! text-blue-400';
-    const inactiveStyles = 'bg-gray-100 border-gray-200!';
-    return `${baseStyles} ${isActive ? activeStyles : inactiveStyles}`;
-  });
-
-  return (
-    <Radio onChange={onChange} value={value} class={radioStyles()}>
-      {label}
-    </Radio>
-  );
-};
 
 const CreateRoomPage = () => {
   const [state, actions] = useAppStore();
@@ -71,11 +50,6 @@ const CreateRoomPage = () => {
     navigate(`/room/${newRoom.id}?type=${roomType()}`);
   };
 
-  const handleRoomTypeChange = (e: InputEvent) => {
-    const value = (e.target as HTMLInputElement).value as RoomType;
-    setRoomType(value);
-  };
-
   const formFields = createMemo(() => [
     {
       id: 'user-name',
@@ -98,29 +72,52 @@ const CreateRoomPage = () => {
 
   return (
     <Center class="h-screen flex flex-col justify-center items-center">
-      <RadioGroup
-        class="flex justify-between items-center w-100 gap-3 min-h-36"
-        defaultValue="planning"
-      >
-        <RoomTypeRadio
-          value="planning"
-          label="Planning"
-          isActive={roomType() === ROOM_TYPE.PLANNING}
-          onChange={handleRoomTypeChange}
-        />
-        <RoomTypeRadio
-          value="retrospective"
-          label="Retrospective"
-          isActive={roomType() === ROOM_TYPE.RETROSPECTIVE}
-          onChange={handleRoomTypeChange}
-        />
-      </RadioGroup>
+      <div class="flex justify-between items-center w-100 gap-3 min-h-36">
+        <button
+          class={`border! flex-1 h-full p-4 rounded-md text-lg! cursor-pointer transition-all ${roomType() === ROOM_TYPE.PLANNING ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'}`}
+          onClick={() => setRoomType('planning')}
+        >
+          Planning
+        </button>
+        <button
+          class={`border! flex-1 h-full p-4 rounded-md text-lg! cursor-pointer transition-all relative flex items-center justify-center ${roomType() === ROOM_TYPE.RETROSPECTIVE ? 'bg-blue-50 border-blue-400! text-blue-400' : 'bg-gray-100 border-gray-200!'}`}
+          onClick={() => setRoomType('retrospective')}
+        >
+          <span class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
+            Beta
+          </span>
+          Retrospective
+        </button>
+      </div>
 
       <GenericFormComponent
         fields={formFields()}
         buttonText="Odayı Oluştur"
         onSubmit={handleSubmit}
       />
+
+      <div class="flex gap-3 mt-6">
+        <a
+          href="https://github.com/resatyavcin/groomix/issues/new?title=Retrospective%20Feature%20Feedback"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-md flex items-center gap-2"
+          style={{ transition: "background-color 0.3s ease" }}
+        >
+          <GithubIcon size={18} />
+          Report Issue
+        </a>
+        <a
+          href="https://github.com/resatyavcin/groomix"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-md flex items-center gap-2"
+          style={{ transition: "background-color 0.3s ease" }}
+        >
+          <GithubIcon size={18} />
+          Star
+        </a>
+      </div>
     </Center>
   );
 };

@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/register-admin", async (req, res) => {
+router.post("/register-admin", async (req: any, res: any) => {
   const { email, password } = req.body;
   const supabase = req.supabase;
 

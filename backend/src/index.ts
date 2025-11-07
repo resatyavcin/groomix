@@ -2,9 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import { createServer } from "http";
-import { Server, Socket } from "socket.io";
-
-import authRouter from "./routes/auth";
+import { Server } from "socket.io";
+import type { Socket } from "socket.io";
+import authRouter from "./routes/auth.js";
 dotenv.config();
 
 // Express setup
@@ -25,7 +25,7 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY!
 );
 
-app.use((req, res, next) => {
+app.use((req: any, res: any, next: any) => {
   // @ts-ignore -> express Request tipine custom property ekliyoruz
   req.supabase = supabase;
   next();
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRouter);
 
-app.get("/", (req, res) => {
+app.get("/", (req: any, res: any) => {
   res.send("Supabase + Express + TypeScript API 🚀");
 });
 

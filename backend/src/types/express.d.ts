@@ -1,4 +1,4 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+const { SupabaseClient } = require("@supabase/supabase-js");
 
 declare global {
   namespace Express {

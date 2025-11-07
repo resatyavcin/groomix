@@ -1,17 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@supabase/supabase-js": "^2.77.0",
     "@types/cors": "^2.8.19",
@@ -23,7 +19,7 @@
   "devDependencies": {
     "@types/express": "^5.0.5",
     "@types/node": "^24.9.2",
-    "tsx": "^4.20.6",
+    "nodemon": "^3.0.0",
     "typescript": "^5.9.3"
   }
 }
